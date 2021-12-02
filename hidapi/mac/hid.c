@@ -406,9 +406,9 @@ static struct hid_device_info *create_device_info_with_usage(IOHIDDeviceRef dev,
 	cur_dev->path = NULL;
 
 
-    res = IORegistryEntryGetPath(iokit_dev, kIOServicePlane, path);
+    res = IORegistryEntryGetPath(iokit_dev, kIOServicePlane, legacy_macos_path);
 	if (res == KERN_SUCCESS) {
-		cur_dev->legacy_macos_path = strdup(path);
+		cur_dev->legacy_macos_path = strdup(legacy_macos_path);
 	} else {
 		res = KERN_INVALID_ARGUMENT;
 	}
