@@ -382,6 +382,7 @@ static struct hid_device_info *create_device_info_with_usage(IOHIDDeviceRef dev,
 	io_object_t iokit_dev;
 	kern_return_t res;
 	uint64_t entry_id;
+    io_string_t legacy_macos_path;
 
 	if (dev == NULL) {
 		return NULL;
@@ -403,6 +404,16 @@ static struct hid_device_info *create_device_info_with_usage(IOHIDDeviceRef dev,
 
 	/* Fill in the path (as a unique ID of the service entry) */
 	cur_dev->path = NULL;
+
+
+    res = IORegistryEntryGetPath(iokit_dev, kIOServicePlane, path);
+	if (res == KERN_SUCCESS) {
+		cur_dev->legacy_macos_path = strdup(path);
+	} else {
+		res = KERN_INVALID_ARGUMENT;
+	}
+
+
 	iokit_dev = IOHIDDeviceGetService(dev);
 	if (iokit_dev != MACH_PORT_NULL) {
 		res = IORegistryEntryGetRegistryEntryID(iokit_dev, &entry_id);

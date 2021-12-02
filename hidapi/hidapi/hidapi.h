@@ -82,6 +82,8 @@ extern "C" {
 		struct hid_device_info {
 			/** Platform-specific device path */
 			char *path;
+            /** MacOS legacy IORegistryEntryGetPath */
+            char *legacy_macos_path
 			/** Device Vendor ID */
 			unsigned short vendor_id;
 			/** Device Product ID */
