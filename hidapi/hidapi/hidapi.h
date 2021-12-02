@@ -83,7 +83,7 @@ extern "C" {
 			/** Platform-specific device path */
 			char *path;
             /** MacOS legacy IORegistryEntryGetPath */
-            char *legacy_macos_path
+            char *legacy_macos_path;
 			/** Device Vendor ID */
 			unsigned short vendor_id;
 			/** Device Product ID */
