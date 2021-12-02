@@ -4,6 +4,7 @@
 // This file is released under the 3-clause BSD license. Note however that Linux
 // support depends on libusb, released under LGNU GPL 2.1 or later.
 
+//go:build (linux && cgo) || (darwin && !ios && cgo) || (windows && cgo)
 // +build linux,cgo darwin,!ios,cgo windows,cgo
 
 package hid
@@ -93,13 +94,14 @@ func Enumerate(vendorID uint16, productID uint16) []DeviceInfo {
 	var infos []DeviceInfo
 	for ; head != nil; head = head.next {
 		info := DeviceInfo{
-			Path:      C.GoString(head.path),
-			VendorID:  uint16(head.vendor_id),
-			ProductID: uint16(head.product_id),
-			Release:   uint16(head.release_number),
-			UsagePage: uint16(head.usage_page),
-			Usage:     uint16(head.usage),
-			Interface: int(head.interface_number),
+			Path:          C.GoString(head.path),
+			LegacyMacPath: C.GoString(head.next.legacy_macos_path),
+			VendorID:      uint16(head.vendor_id),
+			ProductID:     uint16(head.product_id),
+			Release:       uint16(head.release_number),
+			UsagePage:     uint16(head.usage_page),
+			Usage:         uint16(head.usage),
+			Interface:     int(head.interface_number),
 		}
 		if head.serial_number != nil {
 			info.Serial, _ = wcharTToString(head.serial_number)
