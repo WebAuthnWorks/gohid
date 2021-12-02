@@ -95,7 +95,7 @@ func Enumerate(vendorID uint16, productID uint16) []DeviceInfo {
 	for ; head != nil; head = head.next {
 		info := DeviceInfo{
 			Path:          C.GoString(head.path),
-			LegacyMacPath: C.GoString(head.next.legacy_macos_path),
+			LegacyMacPath: C.GoString(head.legacy_macos_path),
 			VendorID:      uint16(head.vendor_id),
 			ProductID:     uint16(head.product_id),
 			Release:       uint16(head.release_number),
